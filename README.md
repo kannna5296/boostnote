@@ -15,7 +15,14 @@ https://github.com/user-attachments/assets/9cf0263c-de33-41c1-af5c-70f076fe82f8
 - 📋 テキストと画像を一緒にコピー
 - 💾 フォーム内容の自動保存（localStorage）
 
-## セットアップ
+> [!NOTE]
+> **画像の利用について**
+> 
+> - このアプリケーションは個人のローカル環境での使用を想定しています
+> - 画像ファイルは`.gitignore`で除外されており、リポジトリには含まれません
+> - 著作権のある画像を配信・使用する場合は、適切な権利処理を行ってください
+
+## 使い方
 
 ### 1. 必要な環境
 
@@ -31,23 +38,15 @@ python3 --version
 
 ### 2. 画像の設定
 
-`images/`フォルダに好きな画像を入れてください：
+`images/`フォルダに好きな画像を入れてください
 
-```bash
-# imagesフォルダを作成
-mkdir images
-
-# 画像ファイルを配置
-# 例: images/motivation.jpg, images/inspiration.png など
-```
+🚀 🚀 モチベが上がるものを入れましょう🚀 🚀 
 
 **対応形式**: JPG, JPEG, PNG, GIF, WebP, SVG
 
 **注意**: `images/`フォルダは`.gitignore`で除外されているため、画像はローカルでのみ使用されます。
 
-### 3. ローカル開発用（オプション）
-
-開発時は簡単なHTTPサーバーを起動できます：
+### 3. サーバ起動
 
 ```bash
 # Pythonサーバーを起動
@@ -69,7 +68,7 @@ python3 server.py --help
 
 ### 4. アプリケーションの使用
 
-1. ブラウザで `index.html` を開く
+1. ブラウザで `http://localhost:8000/index.html` を開く
 2. 学習内容、TODO、やる理由を入力
 3. テンションレベルを選択
 4. 「メール内容を生成」ボタンをクリック
@@ -97,37 +96,4 @@ boostnote/
 
 - **フロントエンド**: Vanilla JavaScript, HTML5, Tailwind CSS
 - **バックエンド**: Python 3.6+ (標準ライブラリのみ)
-- **画像配信**: Python HTTP Server (CORS対応、ローカル開発用)
-- **画像API**: 動的画像リスト取得 (`/api/images`)
-- **データ保存**: localStorage
-- **画像形式**: JPG, JPEG, PNG, GIF, WebP, SVG対応
-- **著作権保護**: `.gitignore`で画像ファイルを除外
 
-## トラブルシューティング
-
-### 画像が表示されない場合
-
-1. `images/`フォルダに画像が配置されているか確認
-   ```bash
-   ls images/
-   ```
-
-2. サーバーが起動しているか確認
-   ```bash
-   python3 server.py
-   ```
-
-3. ブラウザのコンソールでエラーを確認
-   - CORSエラーの場合はサーバーを再起動
-
-4. 画像URLが正しいか確認
-   - `http://localhost:8000/images/your-image.jpg`
-
-### コピー機能が動作しない場合
-
-- モダンブラウザ（Chrome, Firefox, Safari）を使用
-- HTTPS環境では、localhostでも動作します
-
-## ライセンス
-
-MIT License
