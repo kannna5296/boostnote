@@ -5,7 +5,7 @@
 https://github.com/user-attachments/assets/9cf0263c-de33-41c1-af5c-70f076fe82f8
 
 送信メール⇩
-![](./screenshot.png)
+<img src="./screenshot.png" alt="BoostNote スクリーンショット" width="800" height="600" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
 
 ## 機能
 
