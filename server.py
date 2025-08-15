@@ -94,7 +94,7 @@ if __name__ == "__main__":
     import argparse
     
     parser = argparse.ArgumentParser(description="画像配信サーバー")
-    parser.add_argument("-p", "--port", type=int, default=8000, help="ポート番号 (デフォルト: 8000)")
+    parser.add_argument("-p", "--port", type=int, default=8080, help="ポート番号 (デフォルト: 8000)")
     parser.add_argument("-d", "--directory", default=".", help="配信ディレクトリ (デフォルト: 現在のディレクトリ)")
     
     args = parser.parse_args()
