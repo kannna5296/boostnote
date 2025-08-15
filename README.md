@@ -57,7 +57,10 @@ python3 server.py --help
 
 サーバーが起動すると、以下のURLでアクセスできます：
 - アプリ: `http://localhost:8000/index.html`
+- 画像API: `http://localhost:8000/api/images`
 - 画像例: `http://localhost:8000/images/your-image.jpg`
+
+**画像の自動検出**: `images/`フォルダ内の画像は自動的に検出され、ランダムで表示されます。
 
 ### 4. アプリケーションの使用
 
@@ -90,6 +93,7 @@ boostnote/
 - **フロントエンド**: Vanilla JavaScript, HTML5, Tailwind CSS
 - **バックエンド**: Python 3.6+ (標準ライブラリのみ)
 - **画像配信**: Python HTTP Server (CORS対応、ローカル開発用)
+- **画像API**: 動的画像リスト取得 (`/api/images`)
 - **データ保存**: localStorage
 - **画像形式**: JPG, JPEG, PNG, GIF, WebP, SVG対応
 - **著作権保護**: `.gitignore`で画像ファイルを除外

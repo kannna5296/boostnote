@@ -37,13 +37,33 @@ class ContentGenerator {
     };
 
     // 利用可能な画像URL（サーバーから配信）
-    this.availableImages = [
-      '/images/24d48f09bb8cfa74384e32f3711dda40.jpg'
-    ];
+    this.availableImages = [];
+
+    // imagesフォルダ内の画像を動的に取得
+    this.loadAvailableImages();
+  }
+
+  // 利用可能な画像を読み込み
+  loadAvailableImages() {
+    // サーバーから画像リストを取得
+    fetch('/api/images')
+      .then(response => response.json())
+      .then(data => {
+        this.availableImages = data.images || [];
+        console.log('利用可能な画像:', this.availableImages);
+      })
+      .catch(error => {
+        console.warn('画像リストの取得に失敗しました:', error);
+        // フォールバック: デフォルト画像を使用
+        this.availableImages = ['/images/default.jpg'];
+      });
   }
 
   // ランダムな画像を選択
   getRandomImage() {
+    if (this.availableImages.length === 0) {
+      return null;
+    }
     const randomIndex = Math.floor(Math.random() * this.availableImages.length);
     return this.availableImages[randomIndex];
   }
@@ -53,6 +73,13 @@ class ContentGenerator {
     const imageElement = document.getElementById('motivationImage');
     if (imageElement) {
       const randomImage = this.getRandomImage();
+
+      if (!randomImage) {
+        console.warn('利用可能な画像がありません');
+        imageElement.style.display = 'none';
+        return;
+      }
+
       imageElement.src = randomImage;
 
       // 画像読み込み時のエラーハンドリング
