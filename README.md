@@ -1,9 +1,11 @@
 # BoostNote
 
+週末の学習により沸いたモチベーションを平日に繋げる!!
 
 https://github.com/user-attachments/assets/9cf0263c-de33-41c1-af5c-70f076fe82f8
 
-週末の学習により沸いたモチベーションを平日に繋げる
+送信メール⇩
+![](./screenshot.png)
 
 ## 機能
 
