@@ -1,0 +1,55 @@
+# 画像ファイル（著作権の問題を避けるため）
+images/
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.svg
+
+# 圧縮された画像ファイル
+compressed/
+*.compressed.*
+
+# Base64変換ファイル
+*.base64.txt
+
+# システムファイル
+.DS_Store
+Thumbs.db
+
+# エディタ設定
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ログファイル
+*.log
+
+# 一時ファイル
+*.tmp
+*.temp
+
+# Node.js（もし使用する場合）
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python（もし使用する場合）
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# その他
+*.bak
+*.backup
