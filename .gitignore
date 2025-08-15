@@ -1,11 +1,10 @@
 # 画像ファイル（著作権の問題を避けるため）
-images/
-*.jpg
-*.jpeg
-*.png
-*.gif
-*.webp
-*.svg
+images/*.jpg
+images/*.jpeg
+images/*.png
+images/*.gif
+images/*.webp
+images/*.svg
 
 # 圧縮された画像ファイル
 compressed/
