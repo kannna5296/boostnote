@@ -61,12 +61,26 @@
 
           <!-- やる理由 -->
           <div>
-            <label for="reason" class="block text-sm font-medium text-gray-700 mb-2">
+            <label class="block text-sm font-medium text-gray-700 mb-2">
               なぜやるのか
             </label>
-            <textarea id="reason" name="reason" rows="3"
-              class="form-input w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="例：ユーザー体験を向上させたいから" required></textarea>
+            <div id="reasonsContainer" class="space-y-3">
+              <div class="reason-item flex items-start space-x-2">
+                <textarea name="reason" rows="2"
+                  class="form-input flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="例：ユーザー体験を向上させたいから" required></textarea>
+                <button type="button"
+                  class="remove-reason-btn text-red-500 hover:text-red-700 p-2 rounded-md hover:bg-red-50 transition-colors duration-200"
+                  style="display: none;">
+                  🗑️
+                </button>
+              </div>
+            </div>
+            <button type="button" id="addReasonBtn"
+              class="mt-2 text-sm text-blue-600 hover:text-blue-800 font-medium flex items-center space-x-1 transition-colors duration-200">
+              <span>➕</span>
+              <span>理由を追加</span>
+            </button>
           </div>
 
           <!-- テンションレベル -->

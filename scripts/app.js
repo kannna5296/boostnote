@@ -13,6 +13,8 @@ class BoostNoteApp {
     this.generatedContent = document.getElementById('generatedContent');
     this.copyButton = document.getElementById('copyButton');
     this.clearButton = document.getElementById('clearButton');
+    this.addReasonBtn = document.getElementById('addReasonBtn');
+    this.reasonsContainer = document.getElementById('reasonsContainer');
   }
 
   // イベントのバインド
@@ -25,6 +27,16 @@ class BoostNoteApp {
 
     // クリアボタン
     this.clearButton.addEventListener('click', () => this.clearForm());
+
+    // 理由追加ボタン
+    this.addReasonBtn.addEventListener('click', () => this.addReasonBox());
+
+    // 理由削除ボタン（イベント委譲）
+    this.reasonsContainer.addEventListener('click', (e) => {
+      if (e.target.classList.contains('remove-reason-btn')) {
+        this.removeReasonBox(e.target);
+      }
+    });
 
     // キーボードショートカット
     document.addEventListener('keydown', (e) => this.handleKeyboardShortcuts(e));
@@ -42,6 +54,68 @@ class BoostNoteApp {
     this.hideResultSection();
 
     console.log('BoostNote アプリケーションが初期化されました');
+  }
+
+  // 理由ボックスを追加
+  addReasonBox(value = '', isFirst = false) {
+    const reasonItem = document.createElement('div');
+    reasonItem.className = 'reason-item flex items-start space-x-2';
+
+    reasonItem.innerHTML = `
+      <textarea 
+        name="reason"
+        rows="2"
+        class="form-input flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        placeholder="例：ユーザー体験を向上させたいから"
+        ${isFirst ? 'required' : ''}
+      >${value}</textarea>
+      <button 
+        type="button" 
+        class="remove-reason-btn text-red-500 hover:text-red-700 p-2 rounded-md hover:bg-red-50 transition-colors duration-200"
+        ${isFirst ? 'style="display: none;"' : ''}
+      >
+        🗑️
+      </button>
+    `;
+
+    this.reasonsContainer.appendChild(reasonItem);
+
+    // 削除ボタンの表示状態を更新
+    this.updateRemoveButtons();
+
+    // 新しく追加されたテキストエリアにフォーカス
+    const newTextarea = reasonItem.querySelector('textarea');
+    newTextarea.focus();
+  }
+
+  // 理由ボックスを削除
+  removeReasonBox(button) {
+    const reasonItem = button.closest('.reason-item');
+    reasonItem.remove();
+
+    // 削除ボタンの表示状態を更新
+    this.updateRemoveButtons();
+  }
+
+  // 削除ボタンの表示状態を更新
+  updateRemoveButtons() {
+    const reasonItems = this.reasonsContainer.querySelectorAll('.reason-item');
+    const removeButtons = this.reasonsContainer.querySelectorAll('.remove-reason-btn');
+
+    // 最初の理由ボックスは削除ボタンを非表示
+    if (reasonItems.length > 0) {
+      const firstRemoveBtn = reasonItems[0].querySelector('.remove-reason-btn');
+      if (firstRemoveBtn) {
+        firstRemoveBtn.style.display = 'none';
+      }
+    }
+
+    // 2つ目以降は削除ボタンを表示
+    removeButtons.forEach((btn, index) => {
+      if (index > 0) {
+        btn.style.display = 'block';
+      }
+    });
   }
 
   // フォーム送信の処理
@@ -167,6 +241,10 @@ class BoostNoteApp {
   clearForm() {
     // フォームをリセット
     this.form.reset();
+
+    // 理由ボックスをリセット
+    this.reasonsContainer.innerHTML = '';
+    this.addReasonBox('', true); // 空の理由ボックスを1つ追加
 
     // 結果セクションを非表示
     this.hideResultSection();

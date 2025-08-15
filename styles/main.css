@@ -29,6 +29,36 @@ button:hover {
   }
 }
 
+/* 理由ボックスのアニメーション */
+.reason-item {
+  animation: slideIn 0.3s ease-out;
+}
+
+.reason-item:last-child {
+  animation: slideInFromBottom 0.3s ease-out;
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 削除ボタンのアニメーション */
+.remove-reason-btn {
+  transition: all 0.2s ease-in-out;
+}
+
+.remove-reason-btn:hover {
+  transform: scale(1.1);
+}
+
 /* ローディングアニメーション */
 .loading {
   animation: pulse 1.5s infinite;
@@ -60,6 +90,16 @@ button:hover {
   .flex.space-x-4 {
     flex-direction: column;
     gap: 0.5rem;
+  }
+
+  /* モバイルでの理由ボックス */
+  .reason-item {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .remove-reason-btn {
+    align-self: flex-end;
   }
 }
 

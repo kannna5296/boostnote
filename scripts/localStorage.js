@@ -11,7 +11,7 @@ class LocalStorageManager {
     const formData = {
       learning: document.getElementById('learning').value,
       todo: document.getElementById('todo').value,
-      reason: document.getElementById('reason').value,
+      reasons: this.getReasons(),
       tensionLevel: this.getSelectedTensionLevel(),
       timestamp: new Date().toISOString()
     };
@@ -22,6 +22,21 @@ class LocalStorageManager {
     } catch (error) {
       console.error('ローカルストレージの保存に失敗しました:', error);
     }
+  }
+
+  // 理由を取得
+  getReasons() {
+    const reasonElements = document.querySelectorAll('textarea[name="reason"]');
+    const reasons = [];
+
+    reasonElements.forEach(element => {
+      const value = element.value.trim();
+      if (value) {
+        reasons.push(value);
+      }
+    });
+
+    return reasons;
   }
 
   // フォームデータを復元
@@ -39,7 +54,7 @@ class LocalStorageManager {
         if (hoursDiff < 24) {
           document.getElementById('learning').value = data.learning || '';
           document.getElementById('todo').value = data.todo || '';
-          document.getElementById('reason').value = data.reason || '';
+          this.restoreReasons(data.reasons || []);
           this.setSelectedTensionLevel(data.tensionLevel);
           console.log('フォームデータを復元しました');
           return true;
@@ -52,6 +67,26 @@ class LocalStorageManager {
       console.error('ローカルストレージの読み込みに失敗しました:', error);
     }
     return false;
+  }
+
+  // 理由を復元
+  restoreReasons(reasons) {
+    const container = document.getElementById('reasonsContainer');
+    container.innerHTML = ''; // 既存の理由をクリア
+
+    if (reasons.length === 0) {
+      // 理由がない場合は空の理由ボックスを1つ作成
+      if (window.boostNoteApp) {
+        window.boostNoteApp.addReasonBox('', true);
+      }
+    } else {
+      // 保存された理由を復元
+      reasons.forEach((reason, index) => {
+        if (window.boostNoteApp) {
+          window.boostNoteApp.addReasonBox(reason, index === 0);
+        }
+      });
+    }
   }
 
   // フォームデータをクリア
@@ -82,7 +117,7 @@ class LocalStorageManager {
 
   // 自動保存を開始
   startAutoSave() {
-    const formElements = ['learning', 'todo', 'reason'];
+    const formElements = ['learning', 'todo'];
     const radioButtons = document.querySelectorAll('input[name="tensionLevel"]');
 
     // テキスト入力の監視
@@ -96,6 +131,13 @@ class LocalStorageManager {
     // ラジオボタンの監視
     radioButtons.forEach(radio => {
       radio.addEventListener('change', () => this.scheduleAutoSave());
+    });
+
+    // 理由の入力監視（動的に追加される要素のため、イベント委譲を使用）
+    document.addEventListener('input', (e) => {
+      if (e.target.name === 'reason') {
+        this.scheduleAutoSave();
+      }
     });
   }
 

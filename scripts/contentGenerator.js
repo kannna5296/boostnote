@@ -35,21 +35,24 @@ class ContentGenerator {
 
   // メール本文を生成
   generateEmailContent(formData) {
-    const { learning, todo, reason, tensionLevel } = formData;
+    const { learning, todo, reasons, tensionLevel } = formData;
 
     // 入力値の検証
-    if (!learning || !todo || !reason) {
+    if (!learning || !todo || reasons.length === 0) {
       throw new Error('すべての項目を入力してください');
     }
 
     // テンションレベルに応じたテンプレートを選択
     const template = this.selectTemplate(tensionLevel);
 
+    // 理由を整形（複数の場合は改行で区切る）
+    const reasonText = reasons.join('\n• ');
+
     // 本文を生成
     let content = template.format
       .replace('{learning}', this.escapeHtml(learning))
       .replace('{todo}', this.escapeHtml(todo))
-      .replace('{reason}', this.escapeHtml(reason));
+      .replace('{reason}', this.escapeHtml(reasonText));
 
     // プレフィックスとサフィックスを追加
     if (template.prefix) {
@@ -97,15 +100,30 @@ class ContentGenerator {
   getFormData() {
     const learning = document.getElementById('learning').value.trim();
     const todo = document.getElementById('todo').value.trim();
-    const reason = document.getElementById('reason').value.trim();
+    const reasons = this.getReasons();
     const tensionLevel = this.getSelectedTensionLevel();
 
     return {
       learning,
       todo,
-      reason,
+      reasons,
       tensionLevel
     };
+  }
+
+  // 理由を取得
+  getReasons() {
+    const reasonElements = document.querySelectorAll('textarea[name="reason"]');
+    const reasons = [];
+    
+    reasonElements.forEach(element => {
+      const value = element.value.trim();
+      if (value) {
+        reasons.push(value);
+      }
+    });
+    
+    return reasons;
   }
 
   // 選択されたテンションレベルを取得
@@ -124,7 +142,7 @@ class ContentGenerator {
     if (!formData.todo) {
       errors.push('今日やることを入力してください');
     }
-    if (!formData.reason) {
+    if (formData.reasons.length === 0) {
       errors.push('なぜやるのかを入力してください');
     }
 
