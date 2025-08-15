@@ -50,12 +50,14 @@ class ContentGenerator {
     const template = this.selectTemplate(tensionLevel);
 
     // 理由を整形（すべて箇条書き形式）
+    const learningText = "\n•" + learning;
+    const todoText = "\n•" + todo;
     const reasonText = reasons.map(reason => `• ${reason}`).join('\n');
 
     // 本文を生成
     let content = template.format
-      .replace('{learning}', this.escapeHtml(learning))
-      .replace('{todo}', this.escapeHtml(todo))
+      .replace('{learning}', this.escapeHtml(learningText))
+      .replace('{todo}', this.escapeHtml(todoText))
       .replace('{reason}', this.escapeHtml(reasonText));
 
     // プレフィックスとサフィックスを追加
