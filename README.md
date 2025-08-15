@@ -1,6 +1,7 @@
 # BoostNote
 
-![Image](https://github.com/user-attachments/assets/5b9beb78-949b-4cf0-8a23-85d9f9c51024)
+
+https://github.com/user-attachments/assets/9cf0263c-de33-41c1-af5c-70f076fe82f8
 
 週末の学習により沸いたモチベーションを平日に繋げる
 
