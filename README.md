@@ -12,9 +12,37 @@
 
 ## セットアップ
 
-### 1. 画像配信サーバーの起動
+### 1. 必要な環境
 
-画像の品質を保ったまま表示するために、簡単なHTTPサーバーを起動します：
+**Python**: 3.6以上（推奨: 3.8以上）
+
+```bash
+# Pythonバージョン確認
+python3 --version
+
+# 必要要件（標準ライブラリのみ使用）
+# requirements.txt を参照
+```
+
+### 2. 画像の設定
+
+`images/`フォルダに好きな画像を入れてください：
+
+```bash
+# imagesフォルダを作成
+mkdir images
+
+# 画像ファイルを配置
+# 例: images/motivation.jpg, images/inspiration.png など
+```
+
+**対応形式**: JPG, JPEG, PNG, GIF, WebP, SVG
+
+**注意**: `images/`フォルダは`.gitignore`で除外されているため、画像はローカルでのみ使用されます。
+
+### 3. ローカル開発用（オプション）
+
+開発時は簡単なHTTPサーバーを起動できます：
 
 ```bash
 # Pythonサーバーを起動
@@ -22,13 +50,16 @@ python3 server.py
 
 # または、ポートを指定して起動
 python3 server.py -p 8080
+
+# ヘルプ表示
+python3 server.py --help
 ```
 
 サーバーが起動すると、以下のURLでアクセスできます：
 - アプリ: `http://localhost:8000/index.html`
-- 画像例: `http://localhost:8000/images/24d48f09bb8cfa74384e32f3711dda40.jpg`
+- 画像例: `http://localhost:8000/images/your-image.jpg`
 
-### 2. アプリケーションの使用
+### 4. アプリケーションの使用
 
 1. ブラウザで `index.html` を開く
 2. 学習内容、TODO、やる理由を入力
@@ -41,10 +72,11 @@ python3 server.py -p 8080
 ```
 boostnote/
 ├── index.html              # メインHTMLファイル
-├── server.py               # 画像配信サーバー
-├── compress_images.sh      # 画像圧縮スクリプト
-├── images/                 # 画像ファイル
-│   └── 24d48f09bb8cfa74384e32f3711dda40.jpg
+├── server.py               # 画像配信サーバー（ローカル開発用）
+├── requirements.txt        # Python必要要件
+├── .gitignore              # Git除外設定
+├── images/                 # 画像ファイル（.gitignoreで除外）
+│   └── your-images.jpg     # ユーザーが配置する画像
 ├── scripts/
 │   ├── app.js             # メインアプリケーション
 │   ├── contentGenerator.js # メール内容生成
@@ -56,24 +88,31 @@ boostnote/
 ## 技術仕様
 
 - **フロントエンド**: Vanilla JavaScript, HTML5, Tailwind CSS
-- **画像配信**: Python HTTP Server (CORS対応)
+- **バックエンド**: Python 3.6+ (標準ライブラリのみ)
+- **画像配信**: Python HTTP Server (CORS対応、ローカル開発用)
 - **データ保存**: localStorage
-- **画像形式**: JPG, PNG, WebP対応
+- **画像形式**: JPG, JPEG, PNG, GIF, WebP, SVG対応
+- **著作権保護**: `.gitignore`で画像ファイルを除外
 
 ## トラブルシューティング
 
 ### 画像が表示されない場合
 
-1. サーバーが起動しているか確認
+1. `images/`フォルダに画像が配置されているか確認
+   ```bash
+   ls images/
+   ```
+
+2. サーバーが起動しているか確認
    ```bash
    python3 server.py
    ```
 
-2. ブラウザのコンソールでエラーを確認
+3. ブラウザのコンソールでエラーを確認
    - CORSエラーの場合はサーバーを再起動
 
-3. 画像URLが正しいか確認
-   - `http://localhost:8000/images/ファイル名.jpg`
+4. 画像URLが正しいか確認
+   - `http://localhost:8000/images/your-image.jpg`
 
 ### コピー機能が動作しない場合
 

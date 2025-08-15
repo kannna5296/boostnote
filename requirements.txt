@@ -1,0 +1,15 @@
+# BoostNote Web App - Python Requirements
+# 
+# このアプリケーションは Python 標準ライブラリのみを使用しています
+# 追加のパッケージは必要ありません
+#
+# 必要な Python バージョン: 3.6以上
+# 推奨 Python バージョン: 3.8以上
+#
+# 使用している標準ライブラリ:
+# - http.server
+# - socketserver
+# - os
+# - sys
+# - urllib.parse
+# - argparse
