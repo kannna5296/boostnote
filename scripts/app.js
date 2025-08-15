@@ -291,26 +291,149 @@ class BoostNoteApp {
     });
   }
 
-  // テキストと画像を組み合わせたHTMLコンテンツを作成
+  // テキストと画像を組み合わせたHTMLコンテンツを作成（メール対応）
   createCombinedContent(text, imageBase64) {
     if (!imageBase64) {
-      return `<div style="font-family: monospace; white-space: pre-wrap;">${text}</div>`;
+      return this.createEmailHtml(text);
     }
 
-    return `
-      <div style="font-family: monospace; white-space: pre-wrap; margin-bottom: 20px;">
-        ${text}
-      </div>
-      <div style="text-align: center; margin-top: 20px;">
-        <img src="${imageBase64}" alt="モチベーション画像" style="max-width: 100%; max-height: 300px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-      </div>
-    `;
+    return this.createEmailHtml(text, imageBase64);
+  }
+
+  // メール用HTMLを作成
+  createEmailHtml(text, imageBase64 = null) {
+    const emailHtml = `
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>BoostNote - モチベーション</title>
+                        <style>
+                            body {
+                                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                                line-height: 1.6;
+                                color: #333;
+                                max-width: 600px;
+                                margin: 0 auto;
+                                padding: 20px;
+                                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                                min-height: 100vh;
+                            }
+                            .email-container {
+                                background: white;
+                                border-radius: 16px;
+                                padding: 30px;
+                                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                                margin: 20px 0;
+                            }
+                            .header {
+                                text-align: center;
+                                margin-bottom: 30px;
+                                padding-bottom: 20px;
+                                border-bottom: 2px solid #f0f0f0;
+                            }
+                            .header h1 {
+                                color: #4a5568;
+                                font-size: 24px;
+                                font-weight: 700;
+                                margin: 0;
+                                background: linear-gradient(135deg, #667eea, #764ba2);
+                                -webkit-background-clip: text;
+                                -webkit-text-fill-color: transparent;
+                                background-clip: text;
+                            }
+                            .content {
+                                font-family: 'Courier New', monospace;
+                                white-space: pre-wrap;
+                                background: #f8f9fa;
+                                padding: 20px;
+                                border-radius: 8px;
+                                border-left: 4px solid #667eea;
+                                font-size: 14px;
+                                line-height: 1.8;
+                                margin-bottom: 20px;
+                            }
+                            .image-container {
+                                text-align: center;
+                                margin-top: 30px;
+                                padding: 20px;
+                                background: #f8f9fa;
+                                border-radius: 12px;
+                            }
+                            .motivation-image {
+                                max-width: 100%;
+                                max-height: 300px;
+                                border-radius: 12px;
+                                box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+                                transition: transform 0.3s ease;
+                            }
+                            .motivation-image:hover {
+                                transform: scale(1.02);
+                            }
+                            .footer {
+                                text-align: center;
+                                margin-top: 30px;
+                                padding-top: 20px;
+                                border-top: 2px solid #f0f0f0;
+                                color: #718096;
+                                font-size: 12px;
+                            }
+                            .boostnote-badge {
+                                display: inline-block;
+                                background: linear-gradient(135deg, #667eea, #764ba2);
+                                color: white;
+                                padding: 8px 16px;
+                                border-radius: 20px;
+                                font-size: 12px;
+                                font-weight: 600;
+                                text-decoration: none;
+                            }
+                            @media (max-width: 600px) {
+                                body {
+                                    padding: 10px;
+                                }
+                                .email-container {
+                                    padding: 20px;
+                                    margin: 10px 0;
+                                }
+                                .header h1 {
+                                    font-size: 20px;
+                                }
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="email-container">
+                            <div class="header">
+                                <h1>🚀 BoostNote</h1>
+                                <p style="color: #718096; margin: 10px 0 0 0;">週末のモチベーションを平日に繋げる</p>
+                            </div>
+                            
+                            <div class="content">${text}</div>
+                            
+                            ${imageBase64 ? `
+                            <div class="image-container">
+                                <img src="${imageBase64}" alt="モチベーション画像" class="motivation-image">
+                            </div>
+                            ` : ''}
+                            
+                            <div class="footer">
+                                <span class="boostnote-badge">BoostNote</span>
+                                <p style="margin: 10px 0 0 0;">週末の学びを平日の活力に</p>
+                            </div>
+                        </div>
+                    </body>
+                    </html>
+                `;
+
+    return emailHtml;
   }
 
   // コピー成功の表示
   showCopySuccess() {
     const originalText = this.copyButton.textContent;
-    this.copyButton.textContent = '✅ テキスト+画像コピー完了！';
+    this.copyButton.textContent = '✅ メール用HTMLコピー完了！';
     this.copyButton.classList.add('bg-green-600');
 
     setTimeout(() => {
