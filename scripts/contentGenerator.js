@@ -35,6 +35,36 @@ class ContentGenerator {
         suffix: '😌 ゆっくり着実に 😌'
       }
     };
+
+    // 利用可能な画像リスト
+    this.availableImages = [
+      'images/24d48f09bb8cfa74384e32f3711dda40.jpg'
+    ];
+  }
+
+  // ランダムな画像を選択
+  getRandomImage() {
+    const randomIndex = Math.floor(Math.random() * this.availableImages.length);
+    return this.availableImages[randomIndex];
+  }
+
+  // 画像を表示
+  displayImage() {
+    const imageElement = document.getElementById('motivationImage');
+    if (imageElement) {
+      const randomImage = this.getRandomImage();
+      imageElement.src = randomImage;
+
+      // 画像読み込み時のエラーハンドリング
+      imageElement.onerror = () => {
+        console.warn('画像の読み込みに失敗しました:', randomImage);
+        imageElement.style.display = 'none';
+      };
+
+      imageElement.onload = () => {
+        imageElement.style.display = 'block';
+      };
+    }
   }
 
   // メール本文を生成

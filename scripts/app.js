@@ -143,6 +143,9 @@ class BoostNoteApp {
       // メール本文を生成
       const content = window.contentGenerator.generateEmailContent(formData);
 
+      // 画像を表示
+      window.contentGenerator.displayImage();
+
       // 結果を表示
       this.showResult(content);
 
@@ -206,10 +209,29 @@ class BoostNoteApp {
   async copyToClipboard() {
     try {
       const content = this.generatedContent.textContent;
+      const imageElement = document.getElementById('motivationImage');
 
-      // モダンブラウザ用
-      if (navigator.clipboard) {
-        await navigator.clipboard.writeText(content);
+      // 画像をBase64に変換
+      const imageBase64 = await this.imageToBase64(imageElement);
+
+      // テキストと画像を組み合わせたコンテンツを作成
+      const combinedContent = this.createCombinedContent(content, imageBase64);
+
+      // モダンブラウザ用（HTML形式でコピー）
+      if (navigator.clipboard && navigator.clipboard.write) {
+        try {
+          // HTML形式でコピーを試行
+          await navigator.clipboard.write([
+            new ClipboardItem({
+              'text/plain': new Blob([content], { type: 'text/plain' }),
+              'text/html': new Blob([combinedContent], { type: 'text/html' })
+            })
+          ]);
+        } catch (htmlError) {
+          // HTMLコピーが失敗した場合はテキストのみ
+          console.warn('HTMLコピーに失敗、テキストのみコピー:', htmlError);
+          await navigator.clipboard.writeText(content);
+        }
       } else {
         // フォールバック（古いブラウザ用）
         const textArea = document.createElement('textarea');
@@ -229,10 +251,60 @@ class BoostNoteApp {
     }
   }
 
+  // 画像をBase64に変換
+  async imageToBase64(imageElement) {
+    return new Promise((resolve) => {
+      if (!imageElement || !imageElement.src) {
+        resolve(null);
+        return;
+      }
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+
+      img.onload = () => {
+        // キャンバスサイズを設定
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        // 画像をキャンバスに描画
+        ctx.drawImage(img, 0, 0);
+
+        // Base64に変換
+        const base64 = canvas.toDataURL('image/jpeg', 0.8);
+        resolve(base64);
+      };
+
+      img.onerror = () => {
+        console.warn('画像の変換に失敗しました');
+        resolve(null);
+      };
+
+      img.src = imageElement.src;
+    });
+  }
+
+  // テキストと画像を組み合わせたHTMLコンテンツを作成
+  createCombinedContent(text, imageBase64) {
+    if (!imageBase64) {
+      return `<div style="font-family: monospace; white-space: pre-wrap;">${text}</div>`;
+    }
+
+    return `
+      <div style="font-family: monospace; white-space: pre-wrap; margin-bottom: 20px;">
+        ${text}
+      </div>
+      <div style="text-align: center; margin-top: 20px;">
+        <img src="${imageBase64}" alt="モチベーション画像" style="max-width: 100%; max-height: 300px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+      </div>
+    `;
+  }
+
   // コピー成功の表示
   showCopySuccess() {
     const originalText = this.copyButton.textContent;
-    this.copyButton.textContent = '✅ コピー完了！';
+    this.copyButton.textContent = '✅ テキスト+画像コピー完了！';
     this.copyButton.classList.add('bg-green-600');
 
     setTimeout(() => {

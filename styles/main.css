@@ -59,6 +59,21 @@ button:hover {
   transform: scale(1.1);
 }
 
+/* 画像表示エリアのスタイル */
+#motivationImage {
+  transition: all 0.3s ease-in-out;
+}
+
+#motivationImage:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* 画像コンテナのスタイル */
+.bg-gray-100 {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
 /* ローディングアニメーション */
 .loading {
   animation: pulse 1.5s infinite;
@@ -101,6 +116,11 @@ button:hover {
   .remove-reason-btn {
     align-self: flex-end;
   }
+
+  /* モバイルでの画像表示 */
+  #motivationImage {
+    max-height: 200px;
+  }
 }
 
 /* ダークモード対応（将来の拡張用） */
@@ -128,5 +148,9 @@ textarea:focus {
 
   button {
     display: none !important;
+  }
+
+  #motivationImage {
+    max-height: 200px !important;
   }
 }
