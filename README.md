@@ -28,6 +28,8 @@ https://github.com/user-attachments/assets/9cf0263c-de33-41c1-af5c-70f076fe82f8
 
 **Python**: 3.6以上（推奨: 3.8以上）
 
+※開発者は3.11.13環境で動作確認しました。
+
 ```bash
 # Pythonバージョン確認
 python3 --version
