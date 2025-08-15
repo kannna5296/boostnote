@@ -56,6 +56,8 @@ class BoostNoteApp {
     console.log('BoostNote アプリケーションが初期化されました');
   }
 
+
+
   // 理由ボックスを追加
   addReasonBox(value = '', isFirst = false) {
     const reasonItem = document.createElement('div');
@@ -87,6 +89,8 @@ class BoostNoteApp {
     const newTextarea = reasonItem.querySelector('textarea');
     newTextarea.focus();
   }
+
+
 
   // 理由ボックスを削除
   removeReasonBox(button) {
@@ -244,7 +248,7 @@ class BoostNoteApp {
 
     // 理由ボックスをリセット
     this.reasonsContainer.innerHTML = '';
-    this.addReasonBox('', true); // 空の理由ボックスを1つ追加
+    this.addReasonBox('', true);
 
     // 結果セクションを非表示
     this.hideResultSection();

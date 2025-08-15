@@ -5,28 +5,32 @@ class ContentGenerator {
       default: {
         format: `今日の学び：{learning}
 今日やること：{todo}
-なぜやるのか：{reason}`,
+なぜやるのか：
+{reason}`,
         prefix: '',
         suffix: ''
       },
       high: {
         format: `🔥 今日の学び：{learning}
 🚀 今日やること：{todo}
-💪 なぜやるのか：{reason}`,
+💪 なぜやるのか：
+{reason}`,
         prefix: '【高テンション】',
         suffix: '🔥 今日も頑張ろう！ 🔥'
       },
       normal: {
         format: `⚡ 今日の学び：{learning}
 ⚡ 今日やること：{todo}
-⚡ なぜやるのか：{reason}`,
+⚡ なぜやるのか：
+{reason}`,
         prefix: '【今日の目標】',
         suffix: '⚡ 着実に進めていこう ⚡'
       },
       calm: {
         format: `😌 今日の学び：{learning}
 😌 今日やること：{todo}
-😌 なぜやるのか：{reason}`,
+😌 なぜやるのか：
+{reason}`,
         prefix: '【今日の学び】',
         suffix: '😌 ゆっくり着実に 😌'
       }
@@ -45,8 +49,8 @@ class ContentGenerator {
     // テンションレベルに応じたテンプレートを選択
     const template = this.selectTemplate(tensionLevel);
 
-    // 理由を整形（複数の場合は改行で区切る）
-    const reasonText = reasons.join('\n• ');
+    // 理由を整形（すべて箇条書き形式）
+    const reasonText = reasons.map(reason => `• ${reason}`).join('\n');
 
     // 本文を生成
     let content = template.format
@@ -115,14 +119,14 @@ class ContentGenerator {
   getReasons() {
     const reasonElements = document.querySelectorAll('textarea[name="reason"]');
     const reasons = [];
-    
+
     reasonElements.forEach(element => {
       const value = element.value.trim();
       if (value) {
         reasons.push(value);
       }
     });
-    
+
     return reasons;
   }
 
