@@ -53,21 +53,6 @@ boostnote/
     └── main.css           # カスタムスタイル
 ```
 
-## 画像圧縮スクリプト
-
-画像のサイズを調整したい場合は、圧縮スクリプトを使用できます：
-
-```bash
-# 基本的な圧縮（300px, 品質80%）
-./compress_images.sh images/*.jpg
-
-# カスタム設定で圧縮
-./compress_images.sh -s 500 -q 90 -f webp images/photo.jpg
-
-# ヘルプ表示
-./compress_images.sh --help
-```
-
 ## 技術仕様
 
 - **フロントエンド**: Vanilla JavaScript, HTML5, Tailwind CSS
