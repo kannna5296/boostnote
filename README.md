@@ -4,7 +4,12 @@
 
 https://github.com/user-attachments/assets/9cf0263c-de33-41c1-af5c-70f076fe82f8
 
-送信メール⇩
+## ユーザーストーリー
+**ユーザーは、休日に決めたTODO、やる理由を書いたメールを、期待を込めて平日朝の自分に送る。**
+
+**平日朝の自分はそれを確認することで、モチベーションを再度呼び起こす。**
+
+⇩送信されるメール
 <img src="./screenshot.png" alt="BoostNote スクリーンショット" width="800" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
 
 ## 機能
