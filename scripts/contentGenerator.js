@@ -36,9 +36,9 @@ class ContentGenerator {
       }
     };
 
-    // 利用可能な画像リスト
+    // 利用可能な画像URL（サーバーから配信）
     this.availableImages = [
-      'images/24d48f09bb8cfa74384e32f3711dda40.jpg'
+      '/images/24d48f09bb8cfa74384e32f3711dda40.jpg'
     ];
   }
 
@@ -58,6 +58,7 @@ class ContentGenerator {
       // 画像読み込み時のエラーハンドリング
       imageElement.onerror = () => {
         console.warn('画像の読み込みに失敗しました:', randomImage);
+        console.log('サーバーが起動しているか確認してください: python3 server.py');
         imageElement.style.display = 'none';
       };
 
@@ -186,6 +187,15 @@ class ContentGenerator {
       isValid: errors.length === 0,
       errors
     };
+  }
+
+  // 現在表示されている画像のURLを取得
+  getCurrentImageUrl() {
+    const imageElement = document.getElementById('motivationImage');
+    if (imageElement && imageElement.src) {
+      return imageElement.src;
+    }
+    return null;
   }
 }
 

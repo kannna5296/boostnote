@@ -251,11 +251,17 @@ class BoostNoteApp {
     }
   }
 
-  // 画像をBase64に変換
+  // 画像をBase64に変換（CORS対応）
   async imageToBase64(imageElement) {
     return new Promise((resolve) => {
       if (!imageElement || !imageElement.src) {
         resolve(null);
+        return;
+      }
+
+      // サーバーから配信されている画像の場合は直接URLを使用
+      if (imageElement.src.startsWith('http://localhost:8000/') || imageElement.src.startsWith('/images/')) {
+        resolve(imageElement.src);
         return;
       }
 
